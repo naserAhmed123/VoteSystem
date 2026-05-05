@@ -1,0 +1,489 @@
+/* —— VoteChain UI: modern dark theme, glass surfaces, no Tailwind —— */
+
+:root {
+  --bg-deep: #050508;
+  --bg-mid: #0c0e14;
+  --bg-glow: rgba(34, 211, 238, 0.12);
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-hover: rgba(255, 255, 255, 0.07);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --text: #f4f4f5;
+  --text-muted: #a1a1aa;
+  --text-dim: #71717a;
+  --accent: #22d3ee;
+  --accent-soft: rgba(34, 211, 238, 0.15);
+  --accent-2: #c084fc;
+  --success: #4ade80;
+  --success-bg: rgba(74, 222, 128, 0.1);
+  --danger: #fb7185;
+  --danger-bg: rgba(251, 113, 133, 0.1);
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+  --shadow-card: 0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 24px 48px -12px rgba(0, 0, 0, 0.55);
+  --shadow-glow: 0 0 80px -20px rgba(34, 211, 238, 0.35);
+  --font-display: "Outfit", system-ui, sans-serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text);
+  background-color: var(--bg-deep);
+  background-image:
+    radial-gradient(ellipse 100% 80% at 50% -30%, var(--bg-glow), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 100% 0%, rgba(192, 132, 252, 0.08), transparent 45%),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(34, 211, 238, 0.06), transparent 40%),
+    linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 45%);
+  background-attachment: fixed;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* —— App shell —— */
+.shell {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 48px) clamp(18px, 4vw, 28px) 64px;
+  position: relative;
+}
+
+.shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: var(--shadow-glow);
+  opacity: 0.4;
+  z-index: 0;
+}
+
+.shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  margin-bottom: 16px;
+}
+
+.hero__badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  animation: pulse-dot 2s var(--ease-out) infinite;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.85);
+  }
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 4.5vw, 2.1rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0 0 10px;
+  background: linear-gradient(120deg, #fafafa 20%, #a5f3fc 45%, #e9d5ff 75%, #fafafa 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer-title 8s linear infinite;
+}
+
+@keyframes shimmer-title {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.hero__lead {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  max-width: 36ch;
+  margin-inline: auto;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* —— Cards —— */
+.card {
+  background: var(--surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-card), 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.card__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.step-pill {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--bg-deep);
+  background: linear-gradient(135deg, var(--accent), #67e8f9);
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(34, 211, 238, 0.35);
+}
+
+.card h2 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text);
+}
+
+.card__body {
+  margin-top: 4px;
+}
+
+.card p {
+  margin: 10px 0 0;
+  word-break: break-word;
+  color: var(--text-muted);
+}
+
+.card p:first-of-type {
+  margin-top: 0;
+}
+
+.card code {
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  font-size: 0.82em;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border);
+  color: #e4e4e7;
+}
+
+.card strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* —— Address chip —— */
+.address-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border);
+  font-family: ui-monospace, monospace;
+  font-size: 0.78rem;
+  color: #d4d4d8;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.address-chip__label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
+/* —— Buttons —— */
+.btn {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 12px 22px;
+  border-radius: var(--radius-md);
+  border: none;
+  color: #042f2e;
+  background: linear-gradient(135deg, #2dd4bf 0%, #22d3ee 50%, #38bdf8 100%);
+  box-shadow: 0 4px 20px rgba(34, 211, 238, 0.35), 0 1px 0 rgba(255, 255, 255, 0.25) inset;
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out), filter 0.2s;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+  box-shadow: 0 8px 28px rgba(34, 211, 238, 0.45), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  filter: none;
+}
+
+.btn--sm {
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  border-radius: var(--radius-sm);
+}
+
+.btn--outline {
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid rgba(34, 211, 238, 0.45);
+  box-shadow: none;
+}
+
+.btn--outline:hover:not(:disabled) {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.15);
+  filter: none;
+}
+
+/* —— Messages —— */
+.msg {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.msg.error {
+  color: var(--danger);
+  background: var(--danger-bg);
+  border: 1px solid rgba(251, 113, 133, 0.25);
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  margin-top: 12px;
+}
+
+.msg.ok {
+  color: var(--success);
+  background: var(--success-bg);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  margin-top: 12px;
+}
+
+/* —— Candidate list —— */
+.candidate-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.candidate-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border);
+  transition: background 0.2s var(--ease-out), border-color 0.2s;
+}
+
+.candidate-list li:hover {
+  background: var(--surface-hover);
+  border-color: rgba(34, 211, 238, 0.2);
+}
+
+.candidate-list .candidate-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.candidate-list .candidate-meta {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* —— Results table —— */
+.results-wrap {
+  margin-top: 16px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.results-table th,
+.results-table td {
+  text-align: left;
+  padding: 14px 18px;
+}
+
+.results-table thead {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.results-table th {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--border);
+}
+
+.results-table tbody tr {
+  transition: background 0.15s;
+}
+
+.results-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.results-table tbody tr:not(:last-child) td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.results-table td:first-child {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.results-table td:last-child {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  text-align: right;
+}
+
+/* —— Loading skeleton line —— */
+.loading-line {
+  height: 10px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton 1.2s ease-in-out infinite;
+  margin-top: 12px;
+  max-width: 220px;
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.muted-hint {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-top: 14px;
+}

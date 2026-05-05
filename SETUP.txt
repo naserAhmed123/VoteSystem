@@ -1,0 +1,28 @@
+Run order (three terminals):
+
+IMPORTANT: Every time you STOP and START `npx hardhat node`, the blockchain is EMPTY.
+You MUST run `npm run deploy` again. If you skip deploy, MetaMask / the UI will hit
+an address with NO contract — Hardhat logs: "Calling an account which is not a contract"
+and the UI may show "could not decode result data".
+
+1) Start local chain
+   From project root: npx hardhat node
+   Leave this window open.
+
+2) Deploy contract (required after step 1, and again after any hardhat node restart)
+   From project root: npm run deploy
+   Copy the line it prints for VITE_CONTRACT_ADDRESS.
+
+3) Frontend env
+   Create file: frontend/.env
+   Put one line: VITE_CONTRACT_ADDRESS=<your deployed address>
+   Restart Vite if it was already running.
+
+4) MetaMask
+   Add network: RPC http://127.0.0.1:8545 , Chain ID 31337 , currency ETH.
+   Import one of the test private keys printed by Hardhat node (Account #0 is fine).
+
+5) Start UI
+   cd frontend
+   npm run dev
+   Open the URL shown, then: Connect → Vote → check Results.
